@@ -30,8 +30,6 @@ namespace PrismAPI.DAL
             {
                 Registration registration = new Registration();
 
-
-
                 registration.RegistrationId = Convert.ToInt32(dr["RegistrationId"]);
 
                 registration.FName = Convert.ToString(dr["FName"]);
@@ -217,7 +215,6 @@ namespace PrismAPI.DAL
             cmd.Parameters.Add("RegistrationId", SqlDbType.Int).Value = RegistrationId;
             cmd.CommandType = CommandType.StoredProcedure;
             object result = cmd.ExecuteScalar();
-
             con.Close();
             if (result.ToString() == "0")
             {

@@ -105,17 +105,11 @@ namespace PrismAPI.DAL
             cmd.Parameters.Add("Photo", SqlDbType.NVarChar).Value = mainCategory.Photo;
             cmd.Parameters.Add("Status", SqlDbType.NVarChar).Value = mainCategory.Status;
            
-
-
-
             cmd.Parameters.Add("CreatedBy", SqlDbType.NVarChar).Value = mainCategory.CreatedBy;
             cmd.Parameters.Add("CreatedDate", SqlDbType.NVarChar).Value = mainCategory.CreatedDate;
             cmd.Parameters.Add("UpdatedBy", SqlDbType.NVarChar).Value = mainCategory.UpdatedBy;
             cmd.Parameters.Add("UpdatedDate", SqlDbType.NVarChar).Value = mainCategory.UpdatedDate;
           
-
-
-
             Random r = new Random();
             int num = r.Next();
 
