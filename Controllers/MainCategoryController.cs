@@ -16,7 +16,7 @@ namespace PrismAPI.Controllers
 {
     public class MainCategoryController : ApiController
     {
-        // GET: MainCategory
+        
         public Logger Log = null;
         public MainCategoryController()
         {
@@ -45,13 +45,13 @@ namespace PrismAPI.Controllers
 
         [HttpGet]
         [ActionName("GetMainCategoryById")]
-        public MainCategory GetMainCategoryById(int Id)
+        public MainCategory GetMainCategoryById(int MainCategoryId)
         {
             Log.writeMessage("MainCategoryController GetMainCategoryById Start");
             MainCategory mainCategory = null;
             try
             {
-                mainCategory = mainCategoryDAL.GetMainCategoryById(Id);
+                mainCategory = mainCategoryDAL.GetMainCategoryById(MainCategoryId);
             }
             catch (Exception ex)
             {
@@ -61,24 +61,7 @@ namespace PrismAPI.Controllers
             return mainCategory;
         }
 
-        /*[HttpGet]
-        [ActionName("GetLoginCodeByEmail")]
-        public LoginCode GetLoginCodeByEmail(string Email)
-        {
-            Log.writeMessage("LoginCodeController GetLoginCodeByEmail Start");
-            LoginCode loginCode = null;
-            try
-            {
-                loginCode = loginCodeDAL.GetLoginCodeByEmail(Email);
-            }
-            catch (Exception ex)
-            {
-                Log.writeMessage("LoginCodeController GetLoginCodeByEmail Error " + ex.Message);
-            }
-            Log.writeMessage("LoginCodeController GetLoginCodeByEmail End");
-            return loginCode;
-        }*/
-
+      
         [HttpPost]
         [ActionName("AddMainCategory")]
         public IHttpActionResult AddMainCategory(MainCategory mainCategory)
@@ -93,7 +76,7 @@ namespace PrismAPI.Controllers
                 mainCategory.CreatedBy = "Admin";
                 mainCategory.CreatedDate = DateTime.Now.ToString("MM/dd/yyyy");
                 mainCategory.UpdatedBy = "Admin";
-                //firstModel.Status = "Success";
+              
                 mainCategory.UpdatedDate = DateTime.Now.ToString("MM/dd/yyyy");
                 result = mainCategoryDAL.AddMainCategory(mainCategory);
 
@@ -147,11 +130,11 @@ namespace PrismAPI.Controllers
         }
         /// DELETE: api/Address/5
 
-        public IHttpActionResult DeleteMainCategory(int Id)
+        public IHttpActionResult DeleteMainCategory(int MainCategoryId)
         {
             try
             {
-                var result = mainCategoryDAL.DeleteMainCategory(Id);
+                var result = mainCategoryDAL.DeleteMainCategory(MainCategoryId);
 
                 if (result == "Success")
                 {
@@ -170,7 +153,7 @@ namespace PrismAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IHttpActionResult> SaveMainCategoryImage(int Id)
+        public async Task<IHttpActionResult> SaveMainCategoryImage(int MainCategoryId)
         {
             try
             {
@@ -187,16 +170,16 @@ namespace PrismAPI.Controllers
                     //get the folder that's in
                     string theDirectory = Path.GetDirectoryName(fullPath);
                     theDirectory = theDirectory.Substring(0, theDirectory.LastIndexOf('\\'));
-                    File.WriteAllBytes(theDirectory + "/Content/MainCategory" + "/" + Id + "_" + filename, buffer);
+                    File.WriteAllBytes(theDirectory + "/Content/MainCategory" + "/" + MainCategoryId + "_" + filename, buffer);
                     //Do whatever you want with filename and its binary data.
 
                     // get existing rocrd
-                    var mainCategory = mainCategoryDAL.GetMainCategoryById(Id);
-                    var filenamenew = Id + "_" + filename;
+                    var mainCategory = mainCategoryDAL.GetMainCategoryById(MainCategoryId);
+                    var filenamenew = MainCategoryId + "_" + filename;
                     if (mainCategory.Photo.ToLower() != filenamenew.ToLower())
                     {
                         File.Delete(theDirectory + "/Content/MainCategory" + "/" + mainCategory.Photo);
-                        mainCategory.Photo = Id + "_" + filename;
+                        mainCategory.Photo = MainCategoryId + "_" + filename;
                         var result = mainCategoryDAL.UpdateMainCategory(mainCategory);
 
                     }

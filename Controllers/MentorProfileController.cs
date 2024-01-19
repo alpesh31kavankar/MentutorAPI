@@ -45,13 +45,13 @@ namespace PrismAPI.Controllers
 
         [HttpGet]
         [ActionName("GetMentorProfileById")]
-        public MentorProfile GetMentorProfileById(int Id)
+        public MentorProfile GetMentorProfileById(int MentorProfileId)
         {
             Log.writeMessage("MentorProfileController GetMentorProfileById Start");
             MentorProfile mentorProfile = null;
             try
             {
-                mentorProfile = mentorProfileDAL.GetMentorProfileById(Id);
+                mentorProfile = mentorProfileDAL.GetMentorProfileById(MentorProfileId);
             }
             catch (Exception ex)
             {
@@ -147,11 +147,11 @@ namespace PrismAPI.Controllers
         }
         /// DELETE: api/Address/5
 
-        public IHttpActionResult DeleteStudent(int Id)
+        public IHttpActionResult DeleteStudent(int MentorProfileId)
         {
             try
             {
-                var result = mentorProfileDAL.DeleteMentorProfile(Id);
+                var result = mentorProfileDAL.DeleteMentorProfile(MentorProfileId);
 
                 if (result == "Success")
                 {

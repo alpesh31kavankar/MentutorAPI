@@ -365,8 +365,10 @@
     <Compile Include="Controllers\MenteeSkillController.cs" />
     <Compile Include="Controllers\MentorPlanController.cs" />
     <Compile Include="Controllers\MentorProfileController.cs" />
+    <Compile Include="Controllers\MentorSkillController.cs" />
     <Compile Include="Controllers\OfficeController.cs" />
     <Compile Include="Controllers\RegistrationController.cs" />
+    <Compile Include="Controllers\SessionController.cs" />
     <Compile Include="Controllers\SessionFormatController.cs" />
     <Compile Include="Controllers\SkillController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
@@ -382,8 +384,10 @@
     <Compile Include="DAL\MenteeSkillDAL.cs" />
     <Compile Include="DAL\MentorPlanDAL.cs" />
     <Compile Include="DAL\MentorProfileDAL.cs" />
+    <Compile Include="DAL\MentorSkillDAL.cs" />
     <Compile Include="DAL\OfficeDAL.cs" />
     <Compile Include="DAL\RegistrationDAL.cs" />
+    <Compile Include="DAL\SessionDAL.cs" />
     <Compile Include="DAL\SessionFormatDAL.cs" />
     <Compile Include="DAL\SkillDAL.cs" />
     <Compile Include="DAL\StudentDAL.cs" />
@@ -401,8 +405,10 @@
     <Compile Include="Models\MenteeSkill.cs" />
     <Compile Include="Models\MentorPlan.cs" />
     <Compile Include="Models\MentorProfile.cs" />
+    <Compile Include="Models\MentorSkill.cs" />
     <Compile Include="Models\Office.cs" />
     <Compile Include="Models\Registration.cs" />
+    <Compile Include="Models\Session.cs" />
     <Compile Include="Models\SessionFormat.cs" />
     <Compile Include="Models\Skill.cs" />
     <Compile Include="Models\Student.cs" />
@@ -463,7 +469,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\MainCategory\" />
+    <Folder Include="Content\Skill\" />
     <Folder Include="Content\Student\" />
+    <Folder Include="Content\SubCategory\" />
+    <Folder Include="Content\UserDetail\" />
     <Folder Include="Views\FeedBack\" />
     <Folder Include="Views\IndividualPlan\" />
     <Folder Include="Views\LoginCode\" />
@@ -473,9 +483,11 @@
     <Folder Include="Views\MenteeSkill\" />
     <Folder Include="Views\MentorPlan\" />
     <Folder Include="Views\MentorProfile\" />
+    <Folder Include="Views\MentorSkill\" />
     <Folder Include="Views\Office\" />
     <Folder Include="Views\Registration\" />
     <Folder Include="Views\SessionFormat\" />
+    <Folder Include="Views\Session\" />
     <Folder Include="Views\Skill\" />
     <Folder Include="Views\Student\" />
     <Folder Include="Views\SubCategory\" />

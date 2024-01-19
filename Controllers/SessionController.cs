@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -11,53 +12,54 @@ using System.IO;
 using System.Web.Http.Cors;
 using PrismAPI.DAL;
 using PrismAPI.Models;
+
 namespace PrismAPI.Controllers
 {
-    public class UserDetailController : ApiController
+    public class SessionController : ApiController
     {
-        // GET: UserDetail
+        // GET: Session
         public Logger Log = null;
-        public UserDetailController()
+        public SessionController()
         {
             Log = Logger.GetLogger();
         }
 
-        UserDetailDAL userDetailDAL = new UserDetailDAL();
+        SessionDAL sessionDAL = new SessionDAL();
 
         [HttpGet]
-        [ActionName("GetAllUserDetail")]
-        public List<UserDetail> GetAllUserDetail()
+        [ActionName("GetAllSession")]
+        public List<Session> GetAllSession()
         {
-            Log.writeMessage("UserDetailController GetAllUserDetail Start");
-            List<UserDetail> list = null;
+            Log.writeMessage("SessionController GetAllSession Start");
+            List<Session> list = null;
             try
             {
-                list = userDetailDAL.GetAllUserDetail();
+                list = sessionDAL.GetAllSession();
             }
             catch (Exception ex)
             {
-                Log.writeMessage("UserDetailController GetAllUserDetail Error " + ex.Message);
+                Log.writeMessage("SessionController GetAllSession Error " + ex.Message);
             }
-            Log.writeMessage("UserDetailController GetAllUserDetail End");
+            Log.writeMessage("SessionController GetAllSession End");
             return list;
         }
 
         [HttpGet]
-        [ActionName("GetUserDetailById")]
-        public UserDetail GetUserDetailById(int UserDetailId)
+        [ActionName("GetSessionById")]
+        public Session GetSessionById(int Id)
         {
-            Log.writeMessage("UserDetailController GetUserDetailById Start");
-            UserDetail userDetail = null;
+            Log.writeMessage("SessionController GetSessionById Start");
+            Session session = null;
             try
             {
-                userDetail = userDetailDAL.GetUserDetailById(UserDetailId);
+                session = sessionDAL.GetSessionById(Id);
             }
             catch (Exception ex)
             {
-                Log.writeMessage("UserDetailController GetUserDetailById Error " + ex.Message);
+                Log.writeMessage("SessionController GetSessionById Error " + ex.Message);
             }
-            Log.writeMessage("UserDetailController GetUserDetailById End");
-            return userDetail;
+            Log.writeMessage("StudentController GetStudentById End");
+            return session;
         }
 
         /*[HttpGet]
@@ -79,8 +81,8 @@ namespace PrismAPI.Controllers
         }*/
 
         [HttpPost]
-        [ActionName("AddUserDetail")]
-        public IHttpActionResult AddUserDetail(UserDetail userDetail)
+        [ActionName("AddSession")]
+        public IHttpActionResult AddSession(Session session)
         {
             var result = "";
             try
@@ -89,12 +91,12 @@ namespace PrismAPI.Controllers
                 {
                     return BadRequest(ModelState);
                 }
-                userDetail.CreatedBy = "Admin";
-                userDetail.CreatedDate = DateTime.Now.ToString("MM/dd/yyyy");
-                userDetail.UpdatedBy = "Admin";
+                session.CreatedBy = "Admin";
+                session.CreatedDate = DateTime.Now.ToString("MM/dd/yyyy");
+                session.UpdatedBy = "Admin";
                 //firstModel.Status = "Success";
-                userDetail.UpdatedDate = DateTime.Now.ToString("MM/dd/yyyy");
-                result = userDetailDAL.AddUserDetail(userDetail);
+                session.UpdatedDate = DateTime.Now.ToString("MM/dd/yyyy");
+                result = sessionDAL.AddSession(session);
 
 
 
@@ -106,14 +108,14 @@ namespace PrismAPI.Controllers
             }
             catch (Exception ex)
             {
-                Log.writeMessage("UserDetailController AddUserDetail Error " + ex.Message);
+                Log.writeMessage("SessionController AddSession Error " + ex.Message);
             }
             return Ok(result);
         }
 
         [HttpPost]
-        [ActionName("UpdateUserDetail")]
-        public IHttpActionResult UpdateUserDetail(UserDetail userDetail)
+        [ActionName("UpdateSession")]
+        public IHttpActionResult UpdateSession(Session session)
         {
             var result = "";
             try
@@ -123,12 +125,12 @@ namespace PrismAPI.Controllers
                     return BadRequest(ModelState);
                 }
 
-                userDetail.CreatedBy = "Admin";
-                userDetail.CreatedDate = DateTime.Now.ToString("MM/dd/yyyy");
-                userDetail.UpdatedBy = "Admin";
-                userDetail.UpdatedDate = DateTime.Now.ToString("MM/dd/yyyy");
+                session.CreatedBy = "Admin";
+                session.CreatedDate = DateTime.Now.ToString("MM/dd/yyyy");
+                session.UpdatedBy = "Admin";
+                session.UpdatedDate = DateTime.Now.ToString("MM/dd/yyyy");
 
-                result = userDetailDAL.UpdateUserDetail(userDetail);
+                result = sessionDAL.UpdateSession(session);
 
 
 
@@ -140,17 +142,17 @@ namespace PrismAPI.Controllers
             }
             catch (Exception ex)
             {
-                Log.writeMessage("UserDetailController AddUserDetail Error " + ex.Message);
+                Log.writeMessage("SessionController AddSession Error " + ex.Message);
             }
             return Ok(result);
         }
         /// DELETE: api/Address/5
 
-        public IHttpActionResult DeleteUserDetail(int UserDetailId)
+        public IHttpActionResult DeleteStudent(int Id)
         {
             try
             {
-                var result = userDetailDAL.DeleteUserDetail(UserDetailId);
+                var result = sessionDAL.DeleteSession(Id);
 
                 if (result == "Success")
                 {
@@ -163,13 +165,13 @@ namespace PrismAPI.Controllers
             }
             catch (Exception ex)
             {
-                Log.writeMessage("UserDetailController DeleteUserDetail Error " + ex.Message);
+                Log.writeMessage("SessionController DeleteSession Error " + ex.Message);
             }
             return Ok("Failed");
         }
 
-        [HttpPost]
-        public async Task<IHttpActionResult> SaveUserDetailImage(int UserDetailId)
+        /*[HttpPost]
+        public async Task<IHttpActionResult> SaveSessionImage(int Id)
         {
             try
             {
@@ -186,17 +188,17 @@ namespace PrismAPI.Controllers
                     //get the folder that's in
                     string theDirectory = Path.GetDirectoryName(fullPath);
                     theDirectory = theDirectory.Substring(0, theDirectory.LastIndexOf('\\'));
-                    File.WriteAllBytes(theDirectory + "/Content/UserDetail" + "/" + UserDetailId + "_" + filename, buffer);
+                    File.WriteAllBytes(theDirectory + "/Content/Student" + "/" + Id + "_" + filename, buffer);
                     //Do whatever you want with filename and its binary data.
 
                     // get existing rocrd
-                    var userDetail = userDetailDAL.GetUserDetailById(UserDetailId);
-                    var filenamenew = UserDetailId + "_" + filename;
-                    if (userDetail.Photo.ToLower() != filenamenew.ToLower())
+                    var student = sessionDAL.GetSessionById(Id);
+                    var filenamenew = Id + "_" + filename;
+                    if (student.Photo.ToLower() != filenamenew.ToLower())
                     {
-                        File.Delete(theDirectory + "/Content/UserDetail" + "/" + userDetail.Photo);
-                        userDetail.Photo = UserDetailId + "_" + filename;
-                        var result = userDetailDAL.UpdateUserDetail(userDetail);
+                        File.Delete(theDirectory + "/Content/Student" + "/" + student.Photo);
+                        student.Photo = Id + "_" + filename;
+                        var result = studentDAL.UpdateStudent(student);
 
                     }
                 }
@@ -207,6 +209,6 @@ namespace PrismAPI.Controllers
             }
 
             return Ok();
-        }
+        }*/
     }
 }

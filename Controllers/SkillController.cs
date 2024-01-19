@@ -45,13 +45,13 @@ namespace PrismAPI.Controllers
 
         [HttpGet]
         [ActionName("GetSkillById")]
-        public Skill GetSkillById(int Id)
+        public Skill GetSkillById(int SkillId)
         {
             Log.writeMessage("SkillController GetSkillById Start");
             Skill skill = null;
             try
             {
-                skill = skillDAL.GetSkillById(Id);
+                skill = skillDAL.GetSkillById(SkillId);
             }
             catch (Exception ex)
             {
@@ -147,11 +147,11 @@ namespace PrismAPI.Controllers
         }
         /// DELETE: api/Address/5
 
-        public IHttpActionResult DeleteMainCategory(int Id)
+        public IHttpActionResult DeleteMainCategory(int SkillId)
         {
             try
             {
-                var result = skillDAL.DeleteSkill(Id);
+                var result = skillDAL.DeleteSkill(SkillId);
 
                 if (result == "Success")
                 {
@@ -170,7 +170,7 @@ namespace PrismAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IHttpActionResult> SaveSkillImage(int Id)
+        public async Task<IHttpActionResult> SaveSkillImage(int SkillId)
         {
             try
             {
@@ -187,16 +187,16 @@ namespace PrismAPI.Controllers
                     //get the folder that's in
                     string theDirectory = Path.GetDirectoryName(fullPath);
                     theDirectory = theDirectory.Substring(0, theDirectory.LastIndexOf('\\'));
-                    File.WriteAllBytes(theDirectory + "/Content/Skill" + "/" + Id + "_" + filename, buffer);
+                    File.WriteAllBytes(theDirectory + "/Content/Skill" + "/" + SkillId + "_" + filename, buffer);
                     //Do whatever you want with filename and its binary data.
 
                     // get existing rocrd
-                    var skill = skillDAL.GetSkillById(Id);
-                    var filenamenew = Id + "_" + filename;
+                    var skill = skillDAL.GetSkillById(SkillId);
+                    var filenamenew = SkillId + "_" + filename;
                     if (skill.Photo.ToLower() != filenamenew.ToLower())
                     {
                         File.Delete(theDirectory + "/Content/Skill" + "/" + skill.Photo);
-                        skill.Photo = Id + "_" + filename;
+                        skill.Photo = SkillId + "_" + filename;
                         var result = skillDAL.UpdateSkill(skill);
 
                     }

@@ -30,24 +30,20 @@ namespace PrismAPI.DAL
             while (dr.Read())
             {
                 SubCategory subCategory = new SubCategory();
+                subCategory.mainCategory = new MainCategory();
 
                 subCategory.SubCategoryId = Convert.ToInt32(dr["SubCategoryId"]);
-                subCategory.MainCategoryId = Convert.ToInt32(dr["MainCategoryId"]);
+                subCategory.mainCategory.MainCategoryId = Convert.ToInt32(dr["MainCategoryId"]);
+                subCategory.mainCategory.Title = Convert.ToString(dr["Title1"]);
                 subCategory.Title = Convert.ToString(dr["Title"]);
                 subCategory.Description = Convert.ToString(dr["Description"]);
                 subCategory.Photo = Convert.ToString(dr["Photo"]);
                 subCategory.Status = Convert.ToString(dr["Status"]);
-             
-
-
-
                 subCategory.CreatedBy = Convert.ToString(dr["CreatedBy"]);
                 subCategory.CreatedDate = Convert.ToString(dr["CreatedDate"]);
                 subCategory.UpdatedBy = Convert.ToString(dr["UpdatedBy"]);
                 subCategory.UpdatedDate = Convert.ToString(dr["UpdatedDate"]);
-              
-
-
+             
                 subCategoryList.Add(subCategory);
             }
             con.Close();
@@ -55,38 +51,29 @@ namespace PrismAPI.DAL
         }
 
 
-
-
-
-        public SubCategory GetSubCategoryById(int Id)
+        public SubCategory GetSubCategoryById(int SubCategoryId)
         {
             SubCategory subCategory = new SubCategory();
 
             SqlConnection con = conn.OpenDbConnection();
             SqlCommand cmd = new SqlCommand("GetSubCategoryById", con);
-            cmd.Parameters.Add("Id", SqlDbType.Int).Value = Id;
+            cmd.Parameters.Add("SubCategoryId", SqlDbType.Int).Value = SubCategoryId;
             cmd.CommandType = CommandType.StoredProcedure;
             SqlDataReader dr = cmd.ExecuteReader();
             if (dr.Read())
             {
+                subCategory.mainCategory = new MainCategory();
                 subCategory.SubCategoryId = Convert.ToInt32(dr["SubCategoryId"]);
-                subCategory.MainCategoryId = Convert.ToInt32(dr["MainCategoryId"]);
+                subCategory.mainCategory.MainCategoryId = Convert.ToInt32(dr["MainCategoryId"]);
+                subCategory.mainCategory.Title = Convert.ToString(dr["Title1"]);
                 subCategory.Title = Convert.ToString(dr["Title"]);
                 subCategory.Description = Convert.ToString(dr["Description"]);
                 subCategory.Photo = Convert.ToString(dr["Photo"]);
                 subCategory.Status = Convert.ToString(dr["Status"]);
-
-
-
                 subCategory.CreatedBy = Convert.ToString(dr["CreatedBy"]);
                 subCategory.CreatedDate = Convert.ToString(dr["CreatedDate"]);
                 subCategory.UpdatedBy = Convert.ToString(dr["UpdatedBy"]);
                 subCategory.UpdatedDate = Convert.ToString(dr["UpdatedDate"]);
-             
-
-
-
-
 
             }
             con.Close();
@@ -98,38 +85,30 @@ namespace PrismAPI.DAL
         {
             SqlConnection con = conn.OpenDbConnection();
             SqlCommand cmd = new SqlCommand("AddSubCategory", con);
-            //cmd.Parameters.Add("Id", SqlDbType.Int).Value = instructor.Id;
-            cmd.Parameters.Add("FName", SqlDbType.NVarChar).Value = subCategory.Title;
-            cmd.Parameters.Add("LName", SqlDbType.NVarChar).Value = subCategory.Description;
-            cmd.Parameters.Add("Contact", SqlDbType.NVarChar).Value = subCategory.Photo;
-            cmd.Parameters.Add("Email", SqlDbType.NVarChar).Value = subCategory.Status;
+            cmd.Parameters.Add("MainCategoryId", SqlDbType.Int).Value = subCategory.mainCategory.MainCategoryId; 
+            cmd.Parameters.Add("Title", SqlDbType.NVarChar).Value = subCategory.Title;
+            cmd.Parameters.Add("Description", SqlDbType.NVarChar).Value = subCategory.Description;
+            cmd.Parameters.Add("Photo", SqlDbType.NVarChar).Value = subCategory.Photo;
+            cmd.Parameters.Add("Status", SqlDbType.NVarChar).Value = subCategory.Status;
          
-
-
-
             cmd.Parameters.Add("CreatedBy", SqlDbType.NVarChar).Value = subCategory.CreatedBy;
             cmd.Parameters.Add("CreatedDate", SqlDbType.NVarChar).Value = subCategory.CreatedDate;
             cmd.Parameters.Add("UpdatedBy", SqlDbType.NVarChar).Value = subCategory.UpdatedBy;
             cmd.Parameters.Add("UpdatedDate", SqlDbType.NVarChar).Value = subCategory.UpdatedDate;
-        
-
-
 
             Random r = new Random();
             int num = r.Next();
 
-
-
             cmd.CommandType = CommandType.StoredProcedure;
             object result = cmd.ExecuteScalar();
 
-            var Id = result.ToString();
+            var SubCategoryId = result.ToString();
             con.Close();
             if (result.ToString() == "0")
             {
                 return "Failed";
             }
-            return Id.ToString();
+            return SubCategoryId.ToString();
 
         }
 
@@ -138,28 +117,22 @@ namespace PrismAPI.DAL
         {
             SqlConnection con = conn.OpenDbConnection();
             SqlCommand cmd = new SqlCommand("UpdateSubCategory", con);
-            cmd.Parameters.Add("Id", SqlDbType.Int).Value = subCategory.SubCategoryId;
-            cmd.Parameters.Add("Id", SqlDbType.Int).Value = subCategory.MainCategoryId;
-            cmd.Parameters.Add("FName", SqlDbType.NVarChar).Value = subCategory.Title;
-            cmd.Parameters.Add("LName", SqlDbType.NVarChar).Value = subCategory.Description;
-            cmd.Parameters.Add("Contact", SqlDbType.NVarChar).Value = subCategory.Photo;
-            cmd.Parameters.Add("Email", SqlDbType.NVarChar).Value = subCategory.Status;
-         
-
-
-
+            cmd.Parameters.Add("SubCategoryId", SqlDbType.Int).Value = subCategory.SubCategoryId;
+            cmd.Parameters.Add("MainCategoryId", SqlDbType.Int).Value = subCategory.mainCategory.MainCategoryId;
+            cmd.Parameters.Add("Title", SqlDbType.NVarChar).Value = subCategory.Title;
+            cmd.Parameters.Add("Description", SqlDbType.NVarChar).Value = subCategory.Description;
+            cmd.Parameters.Add("Photo", SqlDbType.NVarChar).Value = subCategory.Photo;
+            cmd.Parameters.Add("Status", SqlDbType.NVarChar).Value = subCategory.Status;
+     
             cmd.Parameters.Add("CreatedBy", SqlDbType.NVarChar).Value = subCategory.CreatedBy;
             cmd.Parameters.Add("CreatedDate", SqlDbType.NVarChar).Value = subCategory.CreatedDate;
             cmd.Parameters.Add("UpdatedBy", SqlDbType.NVarChar).Value = subCategory.UpdatedBy;
             cmd.Parameters.Add("UpdatedDate", SqlDbType.NVarChar).Value = subCategory.UpdatedDate;
-         
-
-
-
+       
             cmd.CommandType = CommandType.StoredProcedure;
             object result = cmd.ExecuteScalar();
 
-            var Id = result.ToString();
+            var SubCategoryId = result.ToString();
             con.Close();
             if (result.ToString() == "0")
             {
@@ -168,11 +141,11 @@ namespace PrismAPI.DAL
             return subCategory.SubCategoryId.ToString();
 
         }
-        public string DeleteSubCategory(int Id)
+        public string DeleteSubCategory(int SubCategoryId)
         {
             SqlConnection con = conn.OpenDbConnection();
             SqlCommand cmd = new SqlCommand("DeleteSubCategory", con);
-            cmd.Parameters.Add("Id", SqlDbType.Int).Value = Id;
+            cmd.Parameters.Add("SubCategoryId", SqlDbType.Int).Value = SubCategoryId;
             cmd.CommandType = CommandType.StoredProcedure;
             object result = cmd.ExecuteScalar();
 

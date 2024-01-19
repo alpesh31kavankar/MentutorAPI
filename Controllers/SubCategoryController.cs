@@ -16,7 +16,7 @@ namespace PrismAPI.Controllers
 {
     public class SubCategoryController : ApiController
     {
-        // GET: SubCategory
+       
         public Logger Log = null;
         public SubCategoryController()
         {
@@ -45,13 +45,13 @@ namespace PrismAPI.Controllers
 
         [HttpGet]
         [ActionName("GetSubCategoryById")]
-        public SubCategory GetSubCategoryById(int Id)
+        public SubCategory GetSubCategoryById(int SubCategoryId)
         {
             Log.writeMessage("SubCategoryController GetSubCategoryById Start");
             SubCategory subCategory = null;
             try
             {
-                subCategory = subCategoryDAL.GetSubCategoryById(Id);
+                subCategory = subCategoryDAL.GetSubCategoryById(SubCategoryId);
             }
             catch (Exception ex)
             {
@@ -61,24 +61,7 @@ namespace PrismAPI.Controllers
             return subCategory;
         }
 
-        /*[HttpGet]
-        [ActionName("GetLoginCodeByEmail")]
-        public LoginCode GetLoginCodeByEmail(string Email)
-        {
-            Log.writeMessage("LoginCodeController GetLoginCodeByEmail Start");
-            LoginCode loginCode = null;
-            try
-            {
-                loginCode = loginCodeDAL.GetLoginCodeByEmail(Email);
-            }
-            catch (Exception ex)
-            {
-                Log.writeMessage("LoginCodeController GetLoginCodeByEmail Error " + ex.Message);
-            }
-            Log.writeMessage("LoginCodeController GetLoginCodeByEmail End");
-            return loginCode;
-        }*/
-
+     
         [HttpPost]
         [ActionName("AddSubCategory")]
         public IHttpActionResult AddSubCategory(SubCategory subCategory)
@@ -132,7 +115,6 @@ namespace PrismAPI.Controllers
                 result = subCategoryDAL.UpdateSubCategory(subCategory);
 
 
-
                 if (result.ToString() == "0")
                 {
                     return Ok("Failed");
@@ -145,13 +127,13 @@ namespace PrismAPI.Controllers
             }
             return Ok(result);
         }
-        /// DELETE: api/Address/5
+       
 
-        public IHttpActionResult DeleteMainCategory(int Id)
+        public IHttpActionResult DeleteSubCategory(int SubCategoryId)
         {
             try
             {
-                var result = subCategoryDAL.DeleteSubCategory(Id);
+                var result = subCategoryDAL.DeleteSubCategory(SubCategoryId);
 
                 if (result == "Success")
                 {
@@ -170,7 +152,7 @@ namespace PrismAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IHttpActionResult> SaveSubCategoryImage(int Id)
+        public async Task<IHttpActionResult> SaveSubCategoryImage(int SubCategoryId)
         {
             try
             {
@@ -187,16 +169,16 @@ namespace PrismAPI.Controllers
                     //get the folder that's in
                     string theDirectory = Path.GetDirectoryName(fullPath);
                     theDirectory = theDirectory.Substring(0, theDirectory.LastIndexOf('\\'));
-                    File.WriteAllBytes(theDirectory + "/Content/SubCategory" + "/" + Id + "_" + filename, buffer);
+                    File.WriteAllBytes(theDirectory + "/Content/SubCategory" + "/" + SubCategoryId + "_" + filename, buffer);
                     //Do whatever you want with filename and its binary data.
 
                     // get existing rocrd
-                    var subCategory = subCategoryDAL.GetSubCategoryById(Id);
-                    var filenamenew = Id + "_" + filename;
+                    var subCategory = subCategoryDAL.GetSubCategoryById(SubCategoryId);
+                    var filenamenew = SubCategoryId + "_" + filename;
                     if (subCategory.Photo.ToLower() != filenamenew.ToLower())
                     {
                         File.Delete(theDirectory + "/Content/SubCategory" + "/" + subCategory.Photo);
-                        subCategory.Photo = Id + "_" + filename;
+                        subCategory.Photo = SubCategoryId + "_" + filename;
                         var result = subCategoryDAL.UpdateSubCategory(subCategory);
 
                     }

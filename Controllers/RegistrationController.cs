@@ -11,6 +11,7 @@ using System.IO;
 using System.Web.Http.Cors;
 using PrismAPI.DAL;
 using PrismAPI.Models;
+using System.Net.Mail;
 
 namespace PrismAPI.Controllers
 {
@@ -162,6 +163,49 @@ namespace PrismAPI.Controllers
             }
             Log.writeMessage("RegistrationController GetRegistrationById End");
             return user;
+        }
+
+
+        [HttpPost]
+        [ActionName("SendOTPEmail")]
+        public IHttpActionResult SendOTPEmail(string Email)
+        {
+            Log.writeMessage("RegistrationController GetRegistrationById Start");
+
+            try
+            {
+                // string fromEmail = "your-email@example.com"; // Replace with your email address
+                //string fromEmailPassword = "your-password"; // Replace with your email password
+
+                var smtpClient = new SmtpClient("smtp.gmail.com") // Replace with your SMTP server
+                {
+                    Port = 587, // Gmail uses port 587 for TLS
+                    Credentials = new NetworkCredential("testsumit19@gmail.com", "dyld bnbm auks eopc"), // Replace with your Gmail email and password
+                    EnableSsl = true,
+                };
+
+
+                MailMessage mailMessage = new MailMessage();
+                mailMessage.From = new MailAddress("testsumit19@gmail.com.com");
+                mailMessage.To.Add(Email);
+                mailMessage.Subject = "Your OTP Code";
+
+                // Generate a 6-digit random OTP
+                Random random = new Random();
+                int otpValue = random.Next(100000, 999999);
+                string otp = otpValue.ToString();
+
+                mailMessage.Body = "Your OTP Code is: " + otp;
+
+                smtpClient.Send(mailMessage);
+                return Ok(new { otp });
+            }
+            catch (Exception ex)
+            {
+                // Handle any exceptions here
+                Log.writeMessage("Error sending email: " + ex.Message);
+                return BadRequest("Failed to send email: " + ex.Message);
+            }
         }
 
 

@@ -30,9 +30,11 @@ namespace PrismAPI.DAL
             while (dr.Read())
             {
                 Skill skill = new Skill();
+                skill.subCategory = new SubCategory();
 
                 skill.SkillId = Convert.ToInt32(dr["SkillId"]);
-                skill.SubCategoryId = Convert.ToInt32(dr["SubcategoryId"]);
+                skill.subCategory.SubCategoryId = Convert.ToInt32(dr["SubcategoryId"]);
+                skill.subCategory.Title = Convert.ToString(dr["Title1"]);
                 skill.Title = Convert.ToString(dr["Title"]);
                 skill.Description = Convert.ToString(dr["Description"]);
                 skill.Photo = Convert.ToString(dr["Photo"]);
@@ -58,19 +60,21 @@ namespace PrismAPI.DAL
 
 
 
-        public Skill GetSkillById(int Id)
+        public Skill GetSkillById(int SkillId)
         {
             Skill skill = new Skill();
 
             SqlConnection con = conn.OpenDbConnection();
             SqlCommand cmd = new SqlCommand("GetSkillById", con);
-            cmd.Parameters.Add("Id", SqlDbType.Int).Value = Id;
+            cmd.Parameters.Add("SkillId", SqlDbType.Int).Value = SkillId;
             cmd.CommandType = CommandType.StoredProcedure;
             SqlDataReader dr = cmd.ExecuteReader();
             if (dr.Read())
             {
+                skill.subCategory = new SubCategory();
                 skill.SkillId = Convert.ToInt32(dr["SkillId"]);
-                skill.SubCategoryId = Convert.ToInt32(dr["SubcategoryId"]);
+                skill.subCategory.SubCategoryId = Convert.ToInt32(dr["SubcategoryId"]);
+                skill.subCategory.Title = Convert.ToString(dr["Title1"]);
                 skill.Title = Convert.ToString(dr["Title"]);
                 skill.Description = Convert.ToString(dr["Description"]);
                 skill.Photo = Convert.ToString(dr["Photo"]);
@@ -98,7 +102,7 @@ namespace PrismAPI.DAL
         {
             SqlConnection con = conn.OpenDbConnection();
             SqlCommand cmd = new SqlCommand("AddSkill", con);
-            //cmd.Parameters.Add("Id", SqlDbType.Int).Value = instructor.Id;
+            cmd.Parameters.Add("SubCategoryId", SqlDbType.Int).Value = skill.subCategory.SubCategoryId;
             cmd.Parameters.Add("Title", SqlDbType.NVarChar).Value = skill.Title;
             cmd.Parameters.Add("Description", SqlDbType.NVarChar).Value = skill.Description;
             cmd.Parameters.Add("Photo", SqlDbType.NVarChar).Value = skill.Photo;
@@ -122,13 +126,13 @@ namespace PrismAPI.DAL
             cmd.CommandType = CommandType.StoredProcedure;
             object result = cmd.ExecuteScalar();
 
-            var Id = result.ToString();
+            var SkillId = result.ToString();
             con.Close();
             if (result.ToString() == "0")
             {
                 return "Failed";
             }
-            return Id.ToString();
+            return SkillId.ToString();
 
         }
 
@@ -137,8 +141,8 @@ namespace PrismAPI.DAL
         {
             SqlConnection con = conn.OpenDbConnection();
             SqlCommand cmd = new SqlCommand("UpdateSkill", con);
-            cmd.Parameters.Add("IndividualPlanId", SqlDbType.Int).Value = skill.SkillId;
-
+            cmd.Parameters.Add("SkillId", SqlDbType.Int).Value = skill.SkillId;
+            cmd.Parameters.Add("SubCategoryId", SqlDbType.Int).Value = skill.subCategory.SubCategoryId;
             cmd.Parameters.Add("Title", SqlDbType.NVarChar).Value = skill.Title;
             cmd.Parameters.Add("Description", SqlDbType.NVarChar).Value = skill.Description;
             cmd.Parameters.Add("Photo", SqlDbType.NVarChar).Value = skill.Photo;
@@ -158,7 +162,7 @@ namespace PrismAPI.DAL
             cmd.CommandType = CommandType.StoredProcedure;
             object result = cmd.ExecuteScalar();
 
-            var Id = result.ToString();
+            var SkillId = result.ToString();
             con.Close();
             if (result.ToString() == "0")
             {
@@ -167,11 +171,11 @@ namespace PrismAPI.DAL
             return skill.SkillId.ToString();
 
         }
-        public string DeleteSkill(int Id)
+        public string DeleteSkill(int SkillId)
         {
             SqlConnection con = conn.OpenDbConnection();
             SqlCommand cmd = new SqlCommand("DeleteSkill", con);
-            cmd.Parameters.Add("SkillId", SqlDbType.Int).Value = Id;
+            cmd.Parameters.Add("SkillId", SqlDbType.Int).Value = SkillId;
             cmd.CommandType = CommandType.StoredProcedure;
             object result = cmd.ExecuteScalar();
 

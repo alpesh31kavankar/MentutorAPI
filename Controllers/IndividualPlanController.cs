@@ -45,13 +45,13 @@ namespace PrismAPI.Controllers
 
         [HttpGet]
         [ActionName("GetIndividualPlanById")]
-        public IndividualPlan GetIndividualPlanById(int Id)
+        public IndividualPlan GetIndividualPlanById(int IndividualPlanId)
         {
             Log.writeMessage("IndividualPlanController GetIndividualPlanById Start");
             IndividualPlan individualPlan = null;
             try
             {
-                individualPlan = individualPlanDAL.GetIndividualPlanById(Id);
+                individualPlan = individualPlanDAL.GetIndividualPlanById(IndividualPlanId);
             }
             catch (Exception ex)
             {
@@ -147,11 +147,11 @@ namespace PrismAPI.Controllers
         }
         /// DELETE: api/Address/5
 
-        public IHttpActionResult DeleteIndividualPlan(int Id)
+        public IHttpActionResult DeleteIndividualPlan(int IndividualPlanId)
         {
             try
             {
-                var result = individualPlanDAL.DeleteIndividualPlan(Id);
+                var result = individualPlanDAL.DeleteIndividualPlan(IndividualPlanId);
 
                 if (result == "Success")
                 {

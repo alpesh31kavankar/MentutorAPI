@@ -60,13 +60,13 @@ namespace PrismAPI.DAL
 
 
 
-        public UserDetail GetuserDetailById(int Id)
+        public UserDetail GetUserDetailById(int UserDetailId)
         {
             UserDetail userDetail = new UserDetail();
 
             SqlConnection con = conn.OpenDbConnection();
             SqlCommand cmd = new SqlCommand("GetUserDetailById", con);
-            cmd.Parameters.Add("Id", SqlDbType.Int).Value = Id;
+            cmd.Parameters.Add("UserDetailId", SqlDbType.Int).Value = UserDetailId;
             cmd.CommandType = CommandType.StoredProcedure;
             SqlDataReader dr = cmd.ExecuteReader();
             if (dr.Read())
@@ -105,6 +105,10 @@ namespace PrismAPI.DAL
             SqlConnection con = conn.OpenDbConnection();
             SqlCommand cmd = new SqlCommand("AddUserDetail", con);
             //cmd.Parameters.Add("Id", SqlDbType.Int).Value = instructor.Id;
+            cmd.Parameters.Add("RegistrationId", SqlDbType.Int).Value = userDetail.RegistrationId;
+            cmd.Parameters.Add("CountryId", SqlDbType.Int).Value = userDetail.CountryId;
+            cmd.Parameters.Add("StateId", SqlDbType.Int).Value = userDetail.StateId;
+            cmd.Parameters.Add("CityId", SqlDbType.Int).Value = userDetail.CityId;
             cmd.Parameters.Add("Address", SqlDbType.NVarChar).Value = userDetail.Address;
             cmd.Parameters.Add("Contact", SqlDbType.NVarChar).Value = userDetail.Contact;
             cmd.Parameters.Add("Photo", SqlDbType.NVarChar).Value = userDetail.Photo;
@@ -129,13 +133,13 @@ namespace PrismAPI.DAL
             cmd.CommandType = CommandType.StoredProcedure;
             object result = cmd.ExecuteScalar();
 
-            var Id = result.ToString();
+            var UserDetailId = result.ToString();
             con.Close();
             if (result.ToString() == "0")
             {
                 return "Failed";
             }
-            return Id.ToString();
+            return UserDetailId.ToString();
 
         }
 
@@ -168,7 +172,7 @@ namespace PrismAPI.DAL
             cmd.CommandType = CommandType.StoredProcedure;
             object result = cmd.ExecuteScalar();
 
-            var Id = result.ToString();
+            var UserDetailId = result.ToString();
             con.Close();
             if (result.ToString() == "0")
             {
@@ -177,11 +181,11 @@ namespace PrismAPI.DAL
             return userDetail.UserDetailId.ToString();
 
         }
-        public string DeleteUserDetail(int Id)
+        public string DeleteUserDetail(int UserDetailId)
         {
             SqlConnection con = conn.OpenDbConnection();
             SqlCommand cmd = new SqlCommand("DeleteUserDetail", con);
-            cmd.Parameters.Add("Id", SqlDbType.Int).Value = Id;
+            cmd.Parameters.Add("UserDetailId", SqlDbType.Int).Value = UserDetailId;
             cmd.CommandType = CommandType.StoredProcedure;
             object result = cmd.ExecuteScalar();
 
@@ -193,9 +197,6 @@ namespace PrismAPI.DAL
             return "Success";
         }
 
-        internal UserDetail GetUserDetailById(int id)
-        {
-            throw new NotImplementedException();
-        }
+      
     }
 }

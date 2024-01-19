@@ -28,14 +28,13 @@ namespace PrismAPI.DAL
                 MenteeProfile menteeProfile = new MenteeProfile();
 
                 menteeProfile.MenteeProfileId = Convert.ToInt32(dr["MenteeProfileId"]);
-                menteeProfile.UserDetailId = Convert.ToInt32(dr["UserDetailId"]);
-                menteeProfile.TransactionId = Convert.ToInt32(dr["TransactionId"]);
-
-                menteeProfile.PresentDesignation = Convert.ToString(dr["PresentDesignation"]);
-                menteeProfile.JobProfile = Convert.ToString(dr["JobProfile"]);
+                menteeProfile.RegistrationId = Convert.ToInt32(dr["RegistrationId"]);
+           
+                menteeProfile.JobTitle = Convert.ToString(dr["JobTitle"]);
+                menteeProfile.Industry = Convert.ToString(dr["Industry"]);
                 menteeProfile.YearsOfExperience = Convert.ToString(dr["YearsOfExperience"]);
                 menteeProfile.TargetedDesignation = Convert.ToString(dr["TargetedDesignation"]);
-
+                menteeProfile.Status = Convert.ToString(dr["Status"]);
 
                 menteeProfile.CreatedBy = Convert.ToString(dr["CreatedBy"]);
                 menteeProfile.CreatedDate = Convert.ToString(dr["CreatedDate"]);
@@ -65,24 +64,19 @@ namespace PrismAPI.DAL
             if (dr.Read())
             {
 
-
-
-
                 menteeProfile.MenteeProfileId = Convert.ToInt32(dr["MenteeProfileId"]);
-                menteeProfile.UserDetailId = Convert.ToInt32(dr["UserDetailId"]);
-                menteeProfile.TransactionId = Convert.ToInt32(dr["TransactionId"]);
+                menteeProfile.RegistrationId = Convert.ToInt32(dr["RegistrationId"]);
 
-                menteeProfile.PresentDesignation = Convert.ToString(dr["PresentDesignation"]);
-                menteeProfile.JobProfile = Convert.ToString(dr["JobProfile"]);
+                menteeProfile.JobTitle = Convert.ToString(dr["JobTitle"]);
+                menteeProfile.Industry = Convert.ToString(dr["Industry"]);
                 menteeProfile.YearsOfExperience = Convert.ToString(dr["YearsOfExperience"]);
                 menteeProfile.TargetedDesignation = Convert.ToString(dr["TargetedDesignation"]);
-
+                menteeProfile.Status = Convert.ToString(dr["Status"]);
 
                 menteeProfile.CreatedBy = Convert.ToString(dr["CreatedBy"]);
                 menteeProfile.CreatedDate = Convert.ToString(dr["CreatedDate"]);
                 menteeProfile.UpdatedBy = Convert.ToString(dr["UpdatedBy"]);
                 menteeProfile.UpdatedDate = Convert.ToString(dr["UpdatedDate"]);
-
 
 
             }
@@ -96,13 +90,12 @@ namespace PrismAPI.DAL
             SqlConnection con = conn.OpenDbConnection();
             SqlCommand cmd = new SqlCommand("AddMenteeProfile", con);
             //cmd.Parameters.Add("MenteeProfileId", SqlDbType.Int).Value = menteeProfile.MenteeProfileId;
-            cmd.Parameters.Add("UserDetailId", SqlDbType.Int).Value = menteeProfile.UserDetailId;
-            cmd.Parameters.Add("TransactionId", SqlDbType.Int).Value = menteeProfile.TransactionId;
-            cmd.Parameters.Add("PresentDesignation", SqlDbType.NVarChar).Value = menteeProfile.PresentDesignation;
-            cmd.Parameters.Add("JobProfile", SqlDbType.NVarChar).Value = menteeProfile.JobProfile;
+            cmd.Parameters.Add("RegistrationId", SqlDbType.Int).Value = menteeProfile.RegistrationId;       
+            cmd.Parameters.Add("JobTitle", SqlDbType.NVarChar).Value = menteeProfile.JobTitle;
+            cmd.Parameters.Add("Industry", SqlDbType.NVarChar).Value = menteeProfile.Industry;
             cmd.Parameters.Add("YearsOfExperience", SqlDbType.NVarChar).Value = menteeProfile.YearsOfExperience;
             cmd.Parameters.Add("TargetedDesignation", SqlDbType.NVarChar).Value = menteeProfile.TargetedDesignation;
-
+            cmd.Parameters.Add("Status", SqlDbType.NVarChar).Value = menteeProfile.Status;
 
             cmd.Parameters.Add("CreatedBy", SqlDbType.NVarChar).Value = menteeProfile.CreatedBy;
             cmd.Parameters.Add("CreatedDate", SqlDbType.NVarChar).Value = menteeProfile.CreatedDate;
@@ -134,13 +127,12 @@ namespace PrismAPI.DAL
             SqlConnection con = conn.OpenDbConnection();
             SqlCommand cmd = new SqlCommand("UpdateMenteeProfile", con);
             cmd.Parameters.Add("MenteeProfileId", SqlDbType.Int).Value = menteeProfile.MenteeProfileId;
-            cmd.Parameters.Add("UserDetailId", SqlDbType.Int).Value = menteeProfile.UserDetailId;
-            cmd.Parameters.Add("TransactionId", SqlDbType.Int).Value = menteeProfile.TransactionId;
-            cmd.Parameters.Add("PresentDesignation", SqlDbType.NVarChar).Value = menteeProfile.PresentDesignation;
-            cmd.Parameters.Add("JobProfile", SqlDbType.NVarChar).Value = menteeProfile.JobProfile;
+            cmd.Parameters.Add("RegistrationId", SqlDbType.Int).Value = menteeProfile.RegistrationId;
+            cmd.Parameters.Add("JobTitle", SqlDbType.NVarChar).Value = menteeProfile.JobTitle;
+            cmd.Parameters.Add("Industry", SqlDbType.NVarChar).Value = menteeProfile.Industry;
             cmd.Parameters.Add("YearsOfExperience", SqlDbType.NVarChar).Value = menteeProfile.YearsOfExperience;
             cmd.Parameters.Add("TargetedDesignation", SqlDbType.NVarChar).Value = menteeProfile.TargetedDesignation;
-
+            cmd.Parameters.Add("Status", SqlDbType.NVarChar).Value = menteeProfile.Status;
 
             cmd.Parameters.Add("CreatedBy", SqlDbType.NVarChar).Value = menteeProfile.CreatedBy;
             cmd.Parameters.Add("CreatedDate", SqlDbType.NVarChar).Value = menteeProfile.CreatedDate;
@@ -203,9 +195,9 @@ namespace PrismAPI.DAL
             con.Close();
             if (result.ToString() == "0")
             {
-                return "failed";
+                return "Failed";
             }
-            return "success";
+            return "Success";
         }
     }
 }

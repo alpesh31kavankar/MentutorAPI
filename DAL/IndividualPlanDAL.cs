@@ -57,13 +57,13 @@ namespace PrismAPI.DAL
 
 
 
-        public IndividualPlan GetIndividualPlanById(int Id)
+        public IndividualPlan GetIndividualPlanById(int IndividualPlanId)
         {
             IndividualPlan individualPlan = new IndividualPlan();
 
             SqlConnection con = conn.OpenDbConnection();
             SqlCommand cmd = new SqlCommand("GetIndividualPlanById", con);
-            cmd.Parameters.Add("Id", SqlDbType.Int).Value = Id;
+            cmd.Parameters.Add("IndividualPlanId", SqlDbType.Int).Value = IndividualPlanId;
             cmd.CommandType = CommandType.StoredProcedure;
             SqlDataReader dr = cmd.ExecuteReader();
             if (dr.Read())
@@ -167,11 +167,11 @@ namespace PrismAPI.DAL
             return individualPlan.IndividualPlanId.ToString();
 
         }
-        public string DeleteIndividualPlan(int Id)
+        public string DeleteIndividualPlan(int IndividualPlanId)
         {
             SqlConnection con = conn.OpenDbConnection();
             SqlCommand cmd = new SqlCommand("DeleteIndividualPlan", con);
-            cmd.Parameters.Add("IndividualPlanId", SqlDbType.Int).Value = Id;
+            cmd.Parameters.Add("IndividualPlanId", SqlDbType.Int).Value = IndividualPlanId;
             cmd.CommandType = CommandType.StoredProcedure;
             object result = cmd.ExecuteScalar();
 

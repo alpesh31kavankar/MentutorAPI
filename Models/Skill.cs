@@ -8,7 +8,8 @@ namespace PrismAPI.Models
     public class Skill
     {
         public int SkillId { get; set; }
-         public int SubCategoryId { get; set; }
+        public SubCategory subCategory { get; set; }
+        public int SubCategoryId { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public string Photo { get; set; }

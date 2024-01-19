@@ -218,9 +218,9 @@ namespace PrismAPI.DAL
             con.Close();
             if (result.ToString() == "0")
             {
-                return "failed";
+                return "Failed";
             }
-            return "success";
+            return "Success";
         }
     }
 }

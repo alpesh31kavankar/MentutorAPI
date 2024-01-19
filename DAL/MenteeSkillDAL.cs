@@ -173,6 +173,7 @@ namespace PrismAPI.DAL
 
 
         public string DeleteMenteeSkill(int MenteeSkillId)
+        
         {
             SqlConnection con = conn.OpenDbConnection();
             SqlCommand cmd = new SqlCommand("DeleteMenteeSkill", con);
@@ -183,9 +184,9 @@ namespace PrismAPI.DAL
             con.Close();
             if (result.ToString() == "0")
             {
-                return "failed";
+                return "Failed";
             }
-            return "success";
+            return "Success";
         }
     }
 }

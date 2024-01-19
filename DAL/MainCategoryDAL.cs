@@ -37,16 +37,10 @@ namespace PrismAPI.DAL
                 mainCategory.Description = Convert.ToString(dr["Description"]);
                 mainCategory.Photo = Convert.ToString(dr["Photo"]);
                 mainCategory.Status = Convert.ToString(dr["Status"]);
-                
-
-
-
                 mainCategory.CreatedBy = Convert.ToString(dr["CreatedBy"]);
                 mainCategory.CreatedDate = Convert.ToString(dr["CreatedDate"]);
                 mainCategory.UpdatedBy = Convert.ToString(dr["UpdatedBy"]);
                 mainCategory.UpdatedDate = Convert.ToString(dr["UpdatedDate"]);
-               
-
 
                 mainCategoryList.Add(mainCategory);
             }
@@ -58,13 +52,13 @@ namespace PrismAPI.DAL
 
 
 
-        public MainCategory GetMainCategoryById(int Id)
+        public MainCategory GetMainCategoryById(int MainCategoryId)
         {
             MainCategory mainCategory = new MainCategory();
 
             SqlConnection con = conn.OpenDbConnection();
             SqlCommand cmd = new SqlCommand("GetMainCategoryById", con);
-            cmd.Parameters.Add("Id", SqlDbType.Int).Value = Id;
+            cmd.Parameters.Add("MainCategoryId", SqlDbType.Int).Value = MainCategoryId;
             cmd.CommandType = CommandType.StoredProcedure;
             SqlDataReader dr = cmd.ExecuteReader();
             if (dr.Read())
@@ -75,20 +69,10 @@ namespace PrismAPI.DAL
                 mainCategory.Description = Convert.ToString(dr["Description"]);
                 mainCategory.Photo = Convert.ToString(dr["Photo"]);
                 mainCategory.Status = Convert.ToString(dr["Status"]);
-                
-
-
-
                 mainCategory.CreatedBy = Convert.ToString(dr["CreatedBy"]);
                 mainCategory.CreatedDate = Convert.ToString(dr["CreatedDate"]);
                 mainCategory.UpdatedBy = Convert.ToString(dr["UpdatedBy"]);
                 mainCategory.UpdatedDate = Convert.ToString(dr["UpdatedDate"]);
-                
-
-
-
-
-
             }
             con.Close();
             return mainCategory;
@@ -118,13 +102,13 @@ namespace PrismAPI.DAL
             cmd.CommandType = CommandType.StoredProcedure;
             object result = cmd.ExecuteScalar();
 
-            var Id = result.ToString();
+            var MainCategoryId = result.ToString();
             con.Close();
             if (result.ToString() == "0")
             {
                 return "Failed";
             }
-            return Id.ToString();
+            return MainCategoryId.ToString();
 
         }
 
@@ -139,22 +123,15 @@ namespace PrismAPI.DAL
             cmd.Parameters.Add("Description", SqlDbType.NVarChar).Value = mainCategory.Description;
             cmd.Parameters.Add("Photo", SqlDbType.NVarChar).Value = mainCategory.Photo;
             cmd.Parameters.Add("Status", SqlDbType.NVarChar).Value = mainCategory.Status;
-        
-
-
-
             cmd.Parameters.Add("CreatedBy", SqlDbType.NVarChar).Value = mainCategory.CreatedBy;
             cmd.Parameters.Add("CreatedDate", SqlDbType.NVarChar).Value = mainCategory.CreatedDate;
             cmd.Parameters.Add("UpdatedBy", SqlDbType.NVarChar).Value = mainCategory.UpdatedBy;
             cmd.Parameters.Add("UpdatedDate", SqlDbType.NVarChar).Value = mainCategory.UpdatedDate;
-         
-
-
 
             cmd.CommandType = CommandType.StoredProcedure;
             object result = cmd.ExecuteScalar();
 
-            var Id = result.ToString();
+            var MainCategoryId = result.ToString();
             con.Close();
             if (result.ToString() == "0")
             {
@@ -163,11 +140,11 @@ namespace PrismAPI.DAL
             return mainCategory.MainCategoryId.ToString();
 
         }
-        public string DeleteMainCategory(int Id)
+        public string DeleteMainCategory(int MainCategoryId)
         {
             SqlConnection con = conn.OpenDbConnection();
             SqlCommand cmd = new SqlCommand("DeleteMainCategory", con);
-            cmd.Parameters.Add("Id", SqlDbType.Int).Value = Id;
+            cmd.Parameters.Add("MainCategoryId", SqlDbType.Int).Value = MainCategoryId;
             cmd.CommandType = CommandType.StoredProcedure;
             object result = cmd.ExecuteScalar();
 

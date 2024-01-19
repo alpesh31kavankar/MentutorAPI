@@ -30,20 +30,21 @@ namespace PrismAPI.DAL
             while (dr.Read())
             {
                 MentorProfile mentorProfile = new MentorProfile();
+                
 
-                mentorProfile.MentorProfileId = Convert.ToInt32(dr["MentorProfileId"]);
+        mentorProfile.MentorProfileId = Convert.ToInt32(dr["MentorProfileId"]);
 
-                mentorProfile.UserDetailId = Convert.ToString(dr["UserDetailId"]);
-                mentorProfile.TransactionId = Convert.ToString(dr["TransactionId"]);
-                mentorProfile.Address = Convert.ToString(dr["Address"]);
+                mentorProfile.RegistrationId = Convert.ToInt32(dr["RegistrationId"]);
                 mentorProfile.JobTitle = Convert.ToString(dr["JobTitle"]);
                 mentorProfile.Company = Convert.ToString(dr["Company"]);
-                mentorProfile.Industry = Convert.ToInt32(dr["Industry"]);
+                mentorProfile.Address = Convert.ToString(dr["Address"]);
+                mentorProfile.Industry = Convert.ToString(dr["Industry"]);
+             
                 mentorProfile.HighestEducation = Convert.ToString(dr["HighestEducation"]);
-                mentorProfile.Resume = Convert.ToString(dr["Resume"]);
+              
                 mentorProfile.AreaOfExpertise = Convert.ToString(dr["AreaOfExpertise"]);
                 mentorProfile.LanguagesSpoken = Convert.ToString(dr["LanguagesSpoken"]);
-
+                mentorProfile.Status = Convert.ToString(dr["Status"]);
 
 
 
@@ -64,29 +65,30 @@ namespace PrismAPI.DAL
 
 
 
-        public MentorProfile GetMentorProfileById(int Id)
+        public MentorProfile GetMentorProfileById(int MentorProfileId)
         {
             MentorProfile mentorProfile = new MentorProfile();
 
             SqlConnection con = conn.OpenDbConnection();
             SqlCommand cmd = new SqlCommand("GetMentorProfileById", con);
-            cmd.Parameters.Add("Id", SqlDbType.Int).Value = Id;
+            cmd.Parameters.Add("MentorProfileId", SqlDbType.Int).Value = MentorProfileId;
             cmd.CommandType = CommandType.StoredProcedure;
             SqlDataReader dr = cmd.ExecuteReader();
             if (dr.Read())
             {
                 mentorProfile.MentorProfileId = Convert.ToInt32(dr["MentorProfileId"]);
 
-                mentorProfile.UserDetailId = Convert.ToString(dr["UserDetailId"]);
-                mentorProfile.TransactionId = Convert.ToString(dr["TransactionId"]);
-                mentorProfile.Address = Convert.ToString(dr["Address"]);
+                mentorProfile.RegistrationId = Convert.ToInt32(dr["RegistrationId"]);
                 mentorProfile.JobTitle = Convert.ToString(dr["JobTitle"]);
                 mentorProfile.Company = Convert.ToString(dr["Company"]);
-                mentorProfile.Industry = Convert.ToInt32(dr["Industry"]);
+                mentorProfile.Address = Convert.ToString(dr["Address"]);
+                mentorProfile.Industry = Convert.ToString(dr["Industry"]);
+
                 mentorProfile.HighestEducation = Convert.ToString(dr["HighestEducation"]);
-                mentorProfile.Resume = Convert.ToString(dr["Resume"]);
+
                 mentorProfile.AreaOfExpertise = Convert.ToString(dr["AreaOfExpertise"]);
                 mentorProfile.LanguagesSpoken = Convert.ToString(dr["LanguagesSpoken"]);
+                mentorProfile.Status = Convert.ToString(dr["Status"]);
 
 
 
@@ -110,17 +112,15 @@ namespace PrismAPI.DAL
         {
             SqlConnection con = conn.OpenDbConnection();
             SqlCommand cmd = new SqlCommand("AddMentorProfile", con);
-            //cmd.Parameters.Add("Id", SqlDbType.Int).Value = instructor.Id;
-            cmd.Parameters.Add("Address", SqlDbType.NVarChar).Value = mentorProfile.Address;
+            cmd.Parameters.Add("RegistrationId", SqlDbType.Int).Value = mentorProfile.RegistrationId;
             cmd.Parameters.Add("JobTitle", SqlDbType.NVarChar).Value = mentorProfile.JobTitle;
             cmd.Parameters.Add("Company", SqlDbType.NVarChar).Value = mentorProfile.Company;
+            cmd.Parameters.Add("Address", SqlDbType.NVarChar).Value = mentorProfile.Address;
             cmd.Parameters.Add("Industry", SqlDbType.NVarChar).Value = mentorProfile.Industry;
             cmd.Parameters.Add("HighestEducation", SqlDbType.NVarChar).Value = mentorProfile.HighestEducation;
-            cmd.Parameters.Add("Resume", SqlDbType.NVarChar).Value = mentorProfile.Resume;
             cmd.Parameters.Add("AreaOfExpertise", SqlDbType.NVarChar).Value = mentorProfile.AreaOfExpertise;
             cmd.Parameters.Add("LanguagesSpoken", SqlDbType.NVarChar).Value = mentorProfile.LanguagesSpoken;
-
-
+            cmd.Parameters.Add("Status", SqlDbType.NVarChar).Value = mentorProfile.Status;
 
             cmd.Parameters.Add("CreatedBy", SqlDbType.NVarChar).Value = mentorProfile.CreatedBy;
             cmd.Parameters.Add("CreatedDate", SqlDbType.NVarChar).Value = mentorProfile.CreatedDate;
@@ -155,29 +155,28 @@ namespace PrismAPI.DAL
             SqlCommand cmd = new SqlCommand("UpdateStudent", con);
             cmd.Parameters.Add("MentorProfileId", SqlDbType.Int).Value = mentorProfile.MentorProfileId;
 
-            cmd.Parameters.Add("Address", SqlDbType.NVarChar).Value = mentorProfile.Address;
+            cmd.Parameters.Add("RegistrationId", SqlDbType.Int).Value = mentorProfile.RegistrationId;
             cmd.Parameters.Add("JobTitle", SqlDbType.NVarChar).Value = mentorProfile.JobTitle;
             cmd.Parameters.Add("Company", SqlDbType.NVarChar).Value = mentorProfile.Company;
+            cmd.Parameters.Add("Address", SqlDbType.NVarChar).Value = mentorProfile.Address;
             cmd.Parameters.Add("Industry", SqlDbType.NVarChar).Value = mentorProfile.Industry;
             cmd.Parameters.Add("HighestEducation", SqlDbType.NVarChar).Value = mentorProfile.HighestEducation;
-            cmd.Parameters.Add("Resume", SqlDbType.NVarChar).Value = mentorProfile.Resume;
             cmd.Parameters.Add("AreaOfExpertise", SqlDbType.NVarChar).Value = mentorProfile.AreaOfExpertise;
             cmd.Parameters.Add("LanguagesSpoken", SqlDbType.NVarChar).Value = mentorProfile.LanguagesSpoken;
-
-
+            cmd.Parameters.Add("Status", SqlDbType.NVarChar).Value = mentorProfile.Status;
 
             cmd.Parameters.Add("CreatedBy", SqlDbType.NVarChar).Value = mentorProfile.CreatedBy;
             cmd.Parameters.Add("CreatedDate", SqlDbType.NVarChar).Value = mentorProfile.CreatedDate;
             cmd.Parameters.Add("UpdatedBy", SqlDbType.NVarChar).Value = mentorProfile.UpdatedBy;
             cmd.Parameters.Add("UpdatedDate", SqlDbType.NVarChar).Value = mentorProfile.UpdatedDate;
-         
+
 
 
 
             cmd.CommandType = CommandType.StoredProcedure;
             object result = cmd.ExecuteScalar();
 
-            var Id = result.ToString();
+            var MentorProfileId = result.ToString();
             con.Close();
             if (result.ToString() == "0")
             {
@@ -186,11 +185,11 @@ namespace PrismAPI.DAL
             return mentorProfile.MentorProfileId.ToString();
 
         }
-        public string DeleteMentorProfile(int Id)
+        public string DeleteMentorProfile(int MentorProfileId)
         {
             SqlConnection con = conn.OpenDbConnection();
             SqlCommand cmd = new SqlCommand("DeleteMentorProfile", con);
-            cmd.Parameters.Add("Id", SqlDbType.Int).Value = Id;
+            cmd.Parameters.Add("MentorProfileId", SqlDbType.Int).Value = MentorProfileId;
             cmd.CommandType = CommandType.StoredProcedure;
             object result = cmd.ExecuteScalar();
 
